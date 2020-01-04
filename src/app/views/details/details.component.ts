@@ -62,18 +62,18 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  getSubDetails() {
-    this.generalService
-      .getSubjectDetails(this.subjectId)
-      .subscribe((res: any) => {
-        if (res && res.status && res.status.code === 200) {
-          this.subjectDetails = res.subject;
-        }
-        if (!res.status) {
-          this.subjectDetails = res;
-        }
-      });
-  }
+  // getSubDetails() {
+  //   this.generalService
+  //     .getSubjectDetails(this.subjectId)
+  //     .subscribe((res: any) => {
+  //       if (res && res.status && res.status.code === 200) {
+  //         this.subjectDetails = res.subject;
+  //       }
+  //       if (!res.status) {
+  //         this.subjectDetails = res;
+  //       }
+  //     });
+  // }
 
   setStep(index: number) {
     this.step = index;

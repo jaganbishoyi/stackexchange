@@ -21,3 +21,16 @@ mat-chip.mat-chip.mat-standard-chip.mat-accent {
   margin: 0 5px 0;
   min-height: 17px;
 }
+.site {
+  a,
+  .tags {
+    display: inline-block;
+  }
+  a {
+    margin-right: 5px;
+    img {
+      height: 25px;
+      width: 25px;
+    }
+  }
+}
