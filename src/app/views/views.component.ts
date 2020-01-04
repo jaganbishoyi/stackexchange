@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralService } from '../shared/services/general.service';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { data } from './data';
 @Component({
   selector: 'app-views',
   templateUrl: './views.component.html',
   styleUrls: ['./views.component.scss']
 })
 export class ViewsComponent implements OnInit {
-  subjects: any;
+  // questions: any;
+  questions = data.items;
   constructor(
     public generalService: GeneralService,
     public router: Router,
@@ -16,7 +17,7 @@ export class ViewsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getSub();
+    // this.getQuestions();
     // if (this.activatedRoute.snapshot.data.subjects && this.activatedRoute.snapshot.data.subjects.status) {
     //   this.subjects = this.activatedRoute.snapshot.data.subjects.subjects;
     // } else {
@@ -24,15 +25,13 @@ export class ViewsComponent implements OnInit {
     // }
   }
 
-  getSub() {
-    this.generalService.getSubjects()
+  getQuestions() {
+    this.generalService.getQuestions()
       .subscribe((res: any) => {
-        if (res && res.status && res.status.code === 200) {
-          this.subjects = res.subjects;
+        if (res && res.items && res.items.length) {
+          this.questions = res.items;
         }
-        if (!res.status) {
-          this.subjects = res;
-        }
+        console.table(res);
       });
   }
 

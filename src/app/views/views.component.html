@@ -1,18 +1,39 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-3 mt-3 mb-3" *ngFor="let subject of subjects">
-      <mat-card class="example-card" [routerLink]="['details', subject.name,subject.id,1,10]">
-        <mat-card-header>
-          <img mat-card-avatar src="assets/images/subjects/{{subject.icon}}" alt="{{subject.name}}">
-          <mat-card-title>{{subject.name}} </mat-card-title>
-          <mat-card-subtitle class="block-ellipsis sub_heading">{{subject.sub_heading}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="block-ellipsis">
-            {{subject.description}}
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
+   <div class="row mb-5">
+      <!-- <div class="col-md-12 mt-3 mb-3">
+         <mat-list dense>
+            <mat-list-item *ngFor="let question of questions">
+               <mat-card>
+                  <img matListAvatar src="{{question?.owner?.profile_image}}" alt="question.owner.display_name">
+                  <h3 matLine> {{question.title}} </h3>
+                  <p matLine>
+                     <span> {{question.link}} </span>
+                     <span class="demo-2"> -- {{question.view_count}} </span>
+                  </p>
+               </mat-card>
+            </mat-list-item>
+         </mat-list>
+      </div> -->
+      <div class="col-md-8 mt-3" *ngFor="let question of questions">
+         <mat-card class="card">
+            <mat-card-header>
+               <img mat-card-avatar src="{{question?.owner?.profile_image}}" alt="question.owner.display_name" />
+               <mat-card-title>{{question.title}}</mat-card-title>
+               <mat-card-subtitle>By:-
+                  <a href="{{question?.owner?.link}}" target="_blank"
+                     matTooltip="Reputation: {{question?.owner?.reputation}}"
+                     matTooltipPosition="right">{{question?.owner?.display_name}}</a> | Viewed: {{question.view_count}}
+                  | {{question.answer_count}} answers
+               </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+               <div *ngIf="question && question.tags">
+                  <mat-chip-list aria-label="Tags">
+                     <mat-chip color="accent" *ngFor="let tag of question.tags">{{tag}}</mat-chip>
+                  </mat-chip-list>
+               </div>
+            </mat-card-content>
+         </mat-card>
+      </div>
+   </div>
 </div>

@@ -15,13 +15,11 @@ const routes: Routes = [
   {
     path: 'details/:subjectName/:subjectId/:pageNumber/:limit',
     component: DetailsComponent,
-    resolve: { questions: QuestionListResolver, details: SubjectsDetailsResolver }
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [SubjectsResolver, QuestionListResolver, SubjectsDetailsResolver]
 })
 export class ViewsRoutingModule { }

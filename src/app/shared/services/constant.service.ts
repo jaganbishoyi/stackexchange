@@ -9,9 +9,10 @@ export class ConstantService {
     SERVER_URL: string = environment.SERVER_URL;
     API_URL: string = environment.API_ENDPOINT;
 
-    SUBJECTS = '/subjects';
+    QUESTIONS = 'questions';
+    SITES = 'sites';
 
-   
+
     constructor() { }
 
     getUrl(path: string, params: Array<any> = []) {

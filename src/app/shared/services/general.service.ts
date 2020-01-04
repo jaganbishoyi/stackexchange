@@ -12,21 +12,11 @@ export class GeneralService {
     public constantService: ConstantService
   ) { }
 
-  getSubjects() {
+  getQuestions() {
     return this.http.get(
-      this.constantService.getUrl(this.constantService.SUBJECTS)
-    );
-  }
-
-  getSubjectDetails(id: string) {
-    return this.http.get(
-      this.constantService.getUrl(`${this.constantService.SUBJECTS}/${id}`)
-    );
-  }
-
-  getQuestions(name: string, pageNumber: string, limit: string) {
-    return this.http.get(
-      this.constantService.getUrl(`/${name}/?_page=${pageNumber}&_limit=${limit}`)
+      this.constantService.getUrl(
+        `${this.constantService.QUESTIONS}/?order=desc&sort=hot&site=stackoverflow`
+      )
     );
   }
 }

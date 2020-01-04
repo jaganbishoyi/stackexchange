@@ -31,7 +31,7 @@ export class DetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getDetails();
+    // this.getDetails();
 
     if (this.activatedRoute.snapshot.data.details && this.activatedRoute.snapshot.data.details.status) {
       this.subjectDetails = this.activatedRoute.snapshot.data.details.subject;
@@ -47,8 +47,8 @@ export class DetailsComponent implements OnInit {
 
     this.router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
-        this.getDetails();
-        this.getQuestions(this.subjectName, this.pageNumber, this.limit);
+        // this.getDetails();
+        // this.getQuestions(this.subjectName, this.pageNumber, this.limit);
       }
     });
   }
@@ -123,16 +123,16 @@ export class DetailsComponent implements OnInit {
     ]);
   }
 
-  getQuestions(name, page, limit) {
-    this.generalService
-      .getQuestions(name, page, limit)
-      .subscribe((res: any) => {
-        if (res && res.status && res.status.code === 200) {
-          this.Questions = res[this.subjectName];
-        }
-        if (!res.status) {
-          this.Questions = res;
-        }
-      });
-  }
+  // getQuestions(name, page, limit) {
+  //   this.generalService
+  //     .getQuestions(name, page, limit)
+  //     .subscribe((res: any) => {
+  //       if (res && res.status && res.status.code === 200) {
+  //         this.Questions = res[this.subjectName];
+  //       }
+  //       if (!res.status) {
+  //         this.Questions = res;
+  //       }
+  //     });
+  // }
 }
