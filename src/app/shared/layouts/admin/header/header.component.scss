@@ -1,0 +1,56 @@
+.docs-navbar-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
+  background: #ffffff;
+
+  .mat-button,
+  .mat-flat-button,
+  .mat-icon-button,
+  .mat-stroked-button {
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+    color: #ffffff;
+    background: 0 0;
+  }
+
+  .mat-button .mat-button-wrapper>*,
+  .mat-fab .mat-button-wrapper>*,
+  .mat-flat-button .mat-button-wrapper>*,
+  .mat-icon-button .mat-button-wrapper>*,
+  .mat-mini-fab .mat-button-wrapper>*,
+  .mat-raised-button .mat-button-wrapper>*,
+  .mat-stroked-button .mat-button-wrapper>* {
+    vertical-align: middle;
+  }
+
+  .docs-angular-logo {
+    height: 26px;
+    margin: 0 4px 3px 0;
+    vertical-align: middle;
+  }
+
+  .flex-spacer {
+    flex-grow: 1;
+  }
+}

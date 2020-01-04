@@ -1,0 +1,122 @@
+<div class="component-page-header mb-4">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-md-12">
+            <h1 class="mat-display-1" (click)="firstPage()">
+               {{subjectName}}
+            </h1>
+            <p class="description" *ngIf="subjectDetails?.description">{{subjectDetails?.description}}</p>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-12">
+         <div [ngSwitch]="subjectName">
+            <div *ngSwitchCase="'general'" class="mb-5">
+               <mat-accordion class="example-headers-align">
+                  <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i)" hideToggle
+                     *ngFor="let question of Questions; let i = index; let first = first; let last = last">
+                     <mat-expansion-panel-header>
+                        <mat-panel-title>
+                           <span>{{question.id}}:</span>{{question.question}} ?
+                        </mat-panel-title>
+                        <mat-panel-description>
+                           <span class="circle-link" [hidden]="!question.youtube_reference">
+                              <img style="height: 30px" matTooltip="View In Youtube"
+                                 src="assets/images/youtube-play-button.svg">
+                           </span>
+                        </mat-panel-description>
+                     </mat-expansion-panel-header>
+
+                     <ng-template matExpansionPanelContent>
+                        <mat-divider></mat-divider>
+                        <div class="text-right small-screen">
+                           <span class="circle-link" *ngIf="question.youtube_reference">
+                              <img style="height: 30px" matTooltip="View In Youtube"
+                                 src="assets/images/youtube-play-button.svg">
+                           </span>
+                        </div>
+                        <div class="overview mt-3">
+                           <h6>Overview:</h6>
+                           <p>{{question.overview}}</p>
+                        </div>
+                        <div class="tips">
+                           <h6>Tips:</h6>
+                           <ul>
+                              <li *ngFor="let tip of question.tips">{{tip}}</li>
+                           </ul>
+                        </div>
+                        <div class="answers">
+                           <h6>Answers:</h6>
+                           <mat-vertical-stepper>
+                              <mat-step *ngFor="let answer of question.answers; let i=index">
+                                 <ng-template matStepLabel>Answers {{i+1}}</ng-template>
+                                 <p class="mb-0">{{answer}}</p>
+                              </mat-step>
+                           </mat-vertical-stepper>
+
+                        </div>
+                     </ng-template>
+
+                     <mat-action-row>
+                        <button mat-button color="warn" (click)="prevStep()" [hidden]="first || last">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()" [hidden]="last">Next</button>
+                        <button mat-button color="warn" (click)="previousPage()"
+                           [hidden]="pageNumber<=1 || !last">Previous
+                           Page</button>
+                        <button mat-button color="primary" (click)="nextPage()" [hidden]="!last">Next Page</button>
+                     </mat-action-row>
+                  </mat-expansion-panel>
+               </mat-accordion>
+            </div>
+            <div *ngSwitchDefault class="mb-5">
+               <mat-accordion class="example-headers-align">
+                  <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i)" hideToggle
+                     *ngFor="let question of Questions; let i = index; let first = first; let last = last">
+                     <mat-expansion-panel-header>
+                        <mat-panel-title>
+                           <span>{{question.id}}:</span>{{question.question}} ?
+                        </mat-panel-title>
+                        <mat-panel-description>
+                           <span class="circle-link" *ngIf="question.youtube_reference">
+                              <img style="height: 30px" matTooltip="View In Youtube"
+                                 src="assets/images/youtube-play-button.svg">
+                           </span>
+                           <span class="circle-link" *ngIf="question.medium_blog_reference">
+                              <img style="height: 30px" matTooltip="View In Medium" src="assets/images/medium.svg">
+                           </span>
+                        </mat-panel-description>
+                     </mat-expansion-panel-header>
+                     <ng-template matExpansionPanelContent>
+                        <mat-divider></mat-divider>
+                        <div class="text-right small-screen">
+                           <span class="circle-link" *ngIf="question.youtube_reference">
+                              <img style="height: 30px" matTooltip="View In Youtube"
+                                 src="assets/images/youtube-play-button.svg">
+                           </span>
+                           <span *ngIf="question.medium_blog_reference">
+                              <a class="circle-link" [attr.href]="question.medium_blog_reference" rel="noopener"
+                                 aria-label="Medium Blog" target="_blank">
+                                 <img style="height: 30px" matTooltip="View In Medium" src="assets/images/medium.svg">
+                              </a>
+                           </span>
+                        </div>
+                        {{question.answer}}
+                     </ng-template>
+                     <mat-action-row>
+                        <button mat-button color="warn" (click)="prevStep()" [hidden]="first || last">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()" [hidden]="last">Next</button>
+                        <button mat-button color="warn" (click)="previousPage()"
+                           [hidden]="pageNumber<=1 || !last">Previous
+                           Page</button>
+                        <button mat-button color="primary" (click)="nextPage()" [hidden]="!last">Next Page</button>
+                     </mat-action-row>
+                  </mat-expansion-panel>
+               </mat-accordion>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

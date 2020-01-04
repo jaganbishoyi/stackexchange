@@ -1,0 +1,46 @@
+.mat-card-header .mat-card-subtitle:not(:first-child) {
+  margin-top: -15px;
+}
+
+.mat-card-subtitle {
+  margin-bottom: 5px;
+}
+
+.example-card {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+}
+
+.example-card:hover {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.mat-card-content {
+  p {
+    text-align: justify;
+  }
+}
+
+mat-card-title {
+  text-transform: capitalize;
+}
+
+.block-ellipsis {
+  display: -webkit-box;
+  max-width: 100%;
+  height: 85px;
+  margin: 0 auto;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+}
+mat-card-subtitle.mat-card-subtitle {
+  font-size: 12px !important;
+}
+
+.sub_heading {
+  height: 20px !important;
+  margin-bottom: 4px;
+}
