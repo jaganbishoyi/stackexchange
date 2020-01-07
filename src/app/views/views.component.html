@@ -1,63 +1,82 @@
 <div class="container-fluid">
-   <div class="row mb-5">
-      <div class="col-md-9 mt-3">
-         <div class="row questions-block" *ngFor="let question of questions">
-            <div class="col-md-1 question-status">
-               <div class="votes">
-                  <div class="value">{{question.score}}</div>
-                  <div class="label">votes</div>
-               </div>
-               <div class="answer" [ngClass]="{'active':question.answer_count > 0}">
-                  <div class="value">{{question.answer_count}}</div>
-                  <div class="label">answers</div>
-               </div>
-               <div class="views">
-                  <div class="label">{{question.view_count}} views</div>
-               </div>
+  <div class="row mb-5">
+    <div class="col-md-9 mt-3">
+      <div class="row questions-block" *ngFor="let question of questions;trackBy:questionId">
+        <div class="col-md-1 question-status">
+          <div class="votes">
+            <div class="value">{{question.score}}</div>
+            <div class="label">votes</div>
+          </div>
+          <div class="answer" [ngClass]="{'active':question.answer_count > 0}">
+            <div class="value">{{question.answer_count}}</div>
+            <div class="label">answers</div>
+          </div>
+          <div class="views">
+            <div class="label">{{question.view_count}} views</div>
+          </div>
+        </div>
+        <div class="col-md-11">
+          <h5 class="question" (click)="navigateToDetails(question.question_id)">{{question.title}}</h5>
+          <div class="question-body block-ellipsis" [innerHTML]="question.body"></div>
+          <div class="row">
+            <div class="col-md-8 tags">
+              <span *ngFor="let tag of question.tags">{{tag}}</span>
             </div>
-            <div class="col-md-11">
-               <h5 class="question" (click)="navigateToDetails(question.question_id)">{{question.title}}</h5>
-               <div class="question-body block-ellipsis" [innerHTML]="question.body"></div>
-               <div class="row">
-                  <div class="col-md-8 tags">
-                     <span *ngFor="let tag of question.tags">{{tag}}</span>
-                  </div>
-                  <div class="col-md-4 owner">
-                     <p class="asked">asked {{question.creation_date | unixToDate | date:'medium'}}</p>
-                     <img src="{{question?.owner?.profile_image}}" alt="">
-                     <a href="{{question.owner.link}}" class="user-link"
-                        target="_blank">{{question?.owner?.display_name}}</a>
-                     <span class="reputation" matTooltip="Reputation: {{question?.owner?.reputation}}"
-                        matTooltipPosition="right">{{question?.owner?.reputation}}</span>
-                     <div class="badge">
-                        <span *ngIf="question.owner.badge_counts.gold"
-                           matTooltip="{{question.owner.badge_counts.gold}} gold badge" matTooltipPosition="above">
-                           <div class="badge_gold"></div>
-                           {{question.owner.badge_counts.gold}}
-                        </span>
-                        <span *ngIf="question.owner.badge_counts.silver"
-                           matTooltip="{{question.owner.badge_counts.silver}} silver badge" matTooltipPosition="above">
-                           <div class="badge_silver"></div>
-                           {{question.owner.badge_counts.silver}}
-                        </span>
-                        <span *ngIf="question.owner.badge_counts.bronze"
-                           matTooltip="{{question.owner.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
-                           <div class="badge_bronze"></div>
-                           {{question.owner.badge_counts.bronze}}
-                        </span>
-                     </div>
-                  </div>
-               </div>
+            <div class="col-md-4 owner">
+              <p class="asked">asked {{question.creation_date | unixToDate | date:'medium'}}</p>
+              <img src="{{question?.owner?.profile_image}}" alt="">
+              <a href="{{question.owner.link}}" class="user-link" target="_blank">{{question?.owner?.display_name}}</a>
+              <span class="reputation" matTooltip="Reputation: {{question?.owner?.reputation}}"
+                matTooltipPosition="right">{{question?.owner?.reputation}}</span>
+              <div class="badge">
+                <span *ngIf="question.owner.badge_counts.gold"
+                  matTooltip="{{question.owner.badge_counts.gold}} gold badge" matTooltipPosition="above">
+                  <div class="badge_gold"></div>
+                  {{question.owner.badge_counts.gold}}
+                </span>
+                <span *ngIf="question.owner.badge_counts.silver"
+                  matTooltip="{{question.owner.badge_counts.silver}} silver badge" matTooltipPosition="above">
+                  <div class="badge_silver"></div>
+                  {{question.owner.badge_counts.silver}}
+                </span>
+                <span *ngIf="question.owner.badge_counts.bronze"
+                  matTooltip="{{question.owner.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
+                  <div class="badge_bronze"></div>
+                  {{question.owner.badge_counts.bronze}}
+                </span>
+              </div>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-3 mt-3">
-         <mat-form-field>
-            <mat-label>Site</mat-label>
-            <mat-select [(value)]="selected">
-               <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
-            </mat-select>
-         </mat-form-field>
+      <div class="row pagination" *ngIf="pageMeta && pageMeta.total">
+        <div class="col-md-8">
+          <ngb-pagination [collectionSize]="pageMeta.total" [(page)]="page" (pageChange)="jumpToPage($event)"
+            [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+        <div class="col-md-4">
+          <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]=pageSize
+            (ngModelChange)="pageSizeChanged()">
+            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+              <input ngbButton type="radio" value=15>15
+            </label>
+            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+              <input ngbButton type="radio" value=30>30
+            </label>
+            <label ngbButtonLabel class="btn-outline-primary btn-sm">
+              <input ngbButton type="radio" value=50>50
+            </label>
+          </div> <span class="per-page">per page</span>
+        </div>
       </div>
-   </div>
+    </div>
+    <div class="col-md-3 mt-3">
+      <mat-form-field>
+        <mat-label>Site</mat-label>
+        <mat-select [(value)]="selected">
+          <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 </div>

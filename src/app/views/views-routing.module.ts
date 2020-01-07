@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: ':question_id',
     component: DetailsComponent,
-    // resolve: { answers: AnswerResolver }
+    resolve: { answers: AnswerResolver }
   }
 ];
 

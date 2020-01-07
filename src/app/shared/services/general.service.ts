@@ -16,10 +16,10 @@ export class GeneralService {
     );
   }
 
-  getQuestions() {
+  getQuestions(filterString: string) {
     return this.http.get(
       this.constantService.getUrl(
-        `${this.constantService.QUESTIONS}/?order=desc&sort=hot&pagesize=10&site=stackoverflow&filter=${this.constantService.QUESTIONFILTER}`
+        `${this.constantService.QUESTIONS}/?${filterString}`
       )
     );
   }
@@ -27,7 +27,7 @@ export class GeneralService {
   getQuestionsById(id) {
     return this.http.get(
       this.constantService.getUrl(
-        `${this.constantService.QUESTIONS}/${id}/?order=desc&sort=activity&pagesize=10&site=stackoverflow&filter=${this.constantService.ANSWERFILTER}`
+        `${this.constantService.QUESTIONS}/${id}/?order=desc&sort=activity&pagesize=15&site=stackoverflow&filter=${this.constantService.ANSWERFILTER}`
 
       )
     );

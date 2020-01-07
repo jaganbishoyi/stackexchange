@@ -1,62 +1,110 @@
 <div class="component-page-header mb-2">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-md-12">
-            <h4 class="question">{{answers.title}}</h4>
-            <div class="subheading">
-               <span>Asked <span class="value">{{answers.creation_date | unixToDate | dateAgo}}</span> </span>
-               <span>Active <span class="value">{{answers.last_activity_date | unixToDate | dateAgo}}</span>
-               </span>
-               <span>Viewed <span class="value">{{answers.view_count}} times</span> </span>
-            </div>
-         </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="question">{{answers.title}}</h4>
+        <div class="subheading">
+          <span>Asked <span class="value">{{answers.creation_date | unixToDate | dateAgo}}</span> </span>
+          <span>Active <span class="value">{{answers.last_activity_date | unixToDate | dateAgo}}</span>
+          </span>
+          <span>Viewed <span class="value">{{answers.view_count}} times</span> </span>
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 </div>
 <div class="container-fluid">
-   <div class="row">
-      <div class="col-md-9 question-block">
-         <div class="row">
-            <div class="col-md-1">
-               <div class="upVote"></div>
-               <div class="score">{{answers.score}}</div>
-               <div class="downVote"></div>
+  <div class="row">
+    <div class="col-md-9 question-block">
+      <div class="row">
+        <div class="col-md-1 text-center">
+          <div class="arrow-up"></div>
+          <div class="score">{{answers.score}}</div>
+          <div class="arrow-down"></div>
+          <div class="star"></div>
+        </div>
+        <div class="col-md-11">
+          <div class="answer-body" [innerHTML]="answers.body"></div>
+          <div class="tags">
+            <span *ngFor="let tag of answers.tags">{{tag}}</span>
+          </div>
+          <div class="row">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 owner active">
+              <p class="asked">asked {{answers.creation_date | unixToDate | dateAgo}}</p>
+              <img src="{{answers?.owner?.profile_image}}" alt="">
+              <a href="{{answers.owner?.link}}" class="user-link" target="_blank">{{answers?.owner?.display_name}}</a>
+              <span class="reputation" matTooltip="Reputation: {{answers?.owner?.reputation}}"
+                matTooltipPosition="right">{{answers?.owner?.reputation}}</span>
+              <div class="badge">
+                <span *ngIf="answers.owner?.badge_counts.gold"
+                  matTooltip="{{answers.owner?.badge_counts.gold}} gold badge" matTooltipPosition="above">
+                  <div class="badge_gold"></div>
+                  {{answers.owner?.badge_counts.gold}}
+                </span>
+                <span *ngIf="answers.owner?.badge_counts.silver"
+                  matTooltip="{{answers.owner?.badge_counts.silver}} silver badge" matTooltipPosition="above">
+                  <div class="badge_silver"></div>
+                  {{answers.owner?.badge_counts.silver}}
+                </span>
+                <span *ngIf="answers.owner?.badge_counts.bronze"
+                  matTooltip="{{answers.owner?.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
+                  <div class="badge_bronze"></div>
+                  {{answers.owner?.badge_counts.bronze}}
+                </span>
+              </div>
             </div>
-            <div class="col-md-11">
-               <div class="answer-body" [innerHTML]="answers.body"></div>
-               <div class="tags">
-                  <span *ngFor="let tag of answers.tags">{{tag}}</span>
-               </div>
-               <div class="row">
-                  <div class="col-md-9"></div>
-                  <div class="col-md-3 owner active">
-                     <p class="asked">asked {{answers.creation_date | unixToDate | dateAgo}}</p>
-                     <img src="{{answers?.owner?.profile_image}}" alt="">
-                     <a href="{{answers.owner.link}}" class="user-link"
-                        target="_blank">{{answers?.owner?.display_name}}</a>
-                     <span class="reputation" matTooltip="Reputation: {{answers?.owner?.reputation}}"
-                        matTooltipPosition="right">{{answers?.owner?.reputation}}</span>
-                     <div class="badge">
-                        <span *ngIf="answers.owner.badge_counts.gold"
-                           matTooltip="{{answers.owner.badge_counts.gold}} gold badge" matTooltipPosition="above">
-                           <div class="badge_gold"></div>
-                           {{answers.owner.badge_counts.gold}}
-                        </span>
-                        <span *ngIf="answers.owner.badge_counts.silver"
-                           matTooltip="{{answers.owner.badge_counts.silver}} silver badge" matTooltipPosition="above">
-                           <div class="badge_silver"></div>
-                           {{answers.owner.badge_counts.silver}}
-                        </span>
-                        <span *ngIf="answers.owner.badge_counts.bronze"
-                           matTooltip="{{answers.owner.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
-                           <div class="badge_bronze"></div>
-                           {{answers.owner.badge_counts.bronze}}
-                        </span>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+          </div>
+
+
+        </div>
       </div>
-   </div>
+      <div class="row answers">
+        <div class="col-md-12">
+          <h2>{{answers.answers?.length}} Answers</h2>
+          <ngb-tabset justify="end" [activeId]="activeTab">
+            <ngb-tab id="active" title="active">
+              <ng-template ngbTabContent>
+                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua,
+                  retro synth
+                  master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
+                  retro keffiyeh
+                  dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+                  salvia cillum
+                  iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab id="oldest" title="oldest">
+              <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin
+                coffee squid.
+                <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four
+                  loko farm-to-table
+                  craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
+                  ullamco ad vinyl
+                  cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
+                  helvetica VHS salvia
+                  yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
+                  sustainable jean
+                  shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown,
+                  tumblr butcher vero
+                  sint qui sapiente accusamus tattooed echo park.</p>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab id="votes" title="votes">
+              <ng-template ngbTabContent>
+                <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam.
+                  Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget
+                  tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et
+                  molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque.
+                  Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis.
+                  Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient
+                  montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque.
+                  Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
