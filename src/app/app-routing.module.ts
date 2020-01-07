@@ -4,7 +4,7 @@ import { AdminComponent } from './shared/layouts/admin/admin.component';
 
 const routes: Routes = [
   {
-    path: 'views',
+    path: 'questions',
     loadChildren: () => import('./views/views.module').then(m => m.ViewsModule)
   },
 ];
@@ -12,7 +12,7 @@ const routes: Routes = [
 const APP_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'views',
+    redirectTo: 'questions',
     pathMatch: 'full',
   },
   {

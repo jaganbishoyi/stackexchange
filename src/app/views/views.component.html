@@ -1,39 +1,63 @@
 <div class="container-fluid">
-  <div class="row mb-5">
-    <div class="col-md-9 mt-3">
-      <mat-card class="card mb-3" *ngFor="let question of questions">
-        <mat-card-header>
-          <img mat-card-avatar src="{{question?.owner?.profile_image}}" alt="question.owner.display_name" />
-          <mat-card-title>{{question.title}}</mat-card-title>
-          <mat-card-subtitle>By:-
-            <a href="{{question?.owner?.link}}" target="_blank" matTooltip="Reputation: {{question?.owner?.reputation}}"
-              matTooltipPosition="right">{{question?.owner?.display_name}}</a> | Viewed: {{question.view_count}}
-            | {{question.answer_count}} answers | Created: {{question.creation_date | unixToDate | date:'medium'}} |
-            Last Activity: {{question.last_activity_date | unixToDate | date:'medium'}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="site">
-            <a href="{{question?.link}}" target="_blank">
-              <img src="{{sites[0].favicon_url}}" matTooltip="View On: {{sites[0].site_url}}" matTooltipPosition="right"
-                alt="sites[0].name" />
-            </a>
-            <div class="tags">
-              <mat-chip-list *ngIf="question && question.tags" aria-label="Tags">
-                <mat-chip color="accent" *ngFor="let tag of question.tags">{{tag}}</mat-chip>
-              </mat-chip-list>
+   <div class="row mb-5">
+      <div class="col-md-9 mt-3">
+         <div class="row questions-block" *ngFor="let question of questions">
+            <div class="col-md-1 question-status">
+               <div class="votes">
+                  <div class="value">{{question.score}}</div>
+                  <div class="label">votes</div>
+               </div>
+               <div class="answer" [ngClass]="{'active':question.answer_count > 0}">
+                  <div class="value">{{question.answer_count}}</div>
+                  <div class="label">answers</div>
+               </div>
+               <div class="views">
+                  <div class="label">{{question.view_count}} views</div>
+               </div>
             </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-md-3 mt-3">
-      <mat-form-field>
-        <mat-label>Site</mat-label>
-        <mat-select [(value)]="selected">
-          <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
+            <div class="col-md-11">
+               <h5 class="question" (click)="navigateToDetails(question.question_id)">{{question.title}}</h5>
+               <div class="question-body block-ellipsis" [innerHTML]="question.body"></div>
+               <div class="row">
+                  <div class="col-md-8 tags">
+                     <span *ngFor="let tag of question.tags">{{tag}}</span>
+                  </div>
+                  <div class="col-md-4 owner">
+                     <p class="asked">asked {{question.creation_date | unixToDate | date:'medium'}}</p>
+                     <img src="{{question?.owner?.profile_image}}" alt="">
+                     <a href="{{question.owner.link}}" class="user-link"
+                        target="_blank">{{question?.owner?.display_name}}</a>
+                     <span class="reputation" matTooltip="Reputation: {{question?.owner?.reputation}}"
+                        matTooltipPosition="right">{{question?.owner?.reputation}}</span>
+                     <div class="badge">
+                        <span *ngIf="question.owner.badge_counts.gold"
+                           matTooltip="{{question.owner.badge_counts.gold}} gold badge" matTooltipPosition="above">
+                           <div class="badge_gold"></div>
+                           {{question.owner.badge_counts.gold}}
+                        </span>
+                        <span *ngIf="question.owner.badge_counts.silver"
+                           matTooltip="{{question.owner.badge_counts.silver}} silver badge" matTooltipPosition="above">
+                           <div class="badge_silver"></div>
+                           {{question.owner.badge_counts.silver}}
+                        </span>
+                        <span *ngIf="question.owner.badge_counts.bronze"
+                           matTooltip="{{question.owner.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
+                           <div class="badge_bronze"></div>
+                           {{question.owner.badge_counts.bronze}}
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-3 mt-3">
+         <mat-form-field>
+            <mat-label>Site</mat-label>
+            <mat-select [(value)]="selected">
+               <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+            </mat-select>
+         </mat-form-field>
+      </div>
+   </div>
 </div>

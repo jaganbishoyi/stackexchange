@@ -12,6 +12,9 @@ export class ConstantService {
     QUESTIONS = 'questions';
     SITES = 'sites';
 
+    QUESTIONFILTER = '!-*jbN*LhKFjL';
+    ANSWERFILTER = '!3ykawH3kKhpITWlu9';
+
 
     constructor() { }
 
