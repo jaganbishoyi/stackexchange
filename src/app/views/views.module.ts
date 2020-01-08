@@ -7,11 +7,13 @@ import { ViewsComponent } from './views.component';
 import { SharedModule } from '../shared/shared.module';
 import { DetailsComponent } from './details/details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AnswersComponent } from './answers/answers.component';
 
 @NgModule({
   declarations: [
     ViewsComponent,
     DetailsComponent,
+    AnswersComponent,
   ],
   imports: [
     CommonModule,

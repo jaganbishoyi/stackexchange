@@ -29,9 +29,34 @@
             <span *ngFor="let tag of answers.tags">{{tag}}</span>
           </div>
           <div class="row">
-            <div class="col-md-9"></div>
-            <div class="col-md-3 owner active">
-              <p class="asked">asked {{answers.creation_date | unixToDate | dateAgo}}</p>
+            <div class="col-md-6"></div>
+            <div class="col-md-3 owner" *ngIf="answers?.last_editor">
+              <p class="asked">edited {{answers.creation_date | unixToDate | date:"MMM d  yyyy,  hh:mm"}}</p>
+              <img src="{{answers?.last_editor?.profile_image}}" alt="">
+              <a href="{{answers.last_editor?.link}}" class="user-link"
+                target="_blank">{{answers?.last_editor?.display_name}}</a>
+              <span class="reputation" matTooltip="Reputation: {{answers?.last_editor?.reputation}}"
+                matTooltipPosition="right">{{answers?.last_editor?.reputation}}</span>
+              <div class="badge">
+                <span *ngIf="answers.last_editor?.badge_counts.gold"
+                  matTooltip="{{answers.last_editor?.badge_counts.gold}} gold badge" matTooltipPosition="above">
+                  <div class="badge_gold"></div>
+                  {{answers.last_editor?.badge_counts.gold}}
+                </span>
+                <span *ngIf="answers.last_editor?.badge_counts.silver"
+                  matTooltip="{{answers.last_editor?.badge_counts.silver}} silver badge" matTooltipPosition="above">
+                  <div class="badge_silver"></div>
+                  {{answers.last_editor?.badge_counts.silver}}
+                </span>
+                <span *ngIf="answers.last_editor?.badge_counts.bronze"
+                  matTooltip="{{answers.last_editor?.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
+                  <div class="badge_bronze"></div>
+                  {{answers.last_editor?.badge_counts.bronze}}
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3 owner active" [ngClass]="{'offset-md-3': !answers?.last_editor}">
+              <p class="asked">asked {{answers.creation_date | unixToDate | date:"MMM d  yyyy,  hh:mm"}}</p>
               <img src="{{answers?.owner?.profile_image}}" alt="">
               <a href="{{answers.owner?.link}}" class="user-link" target="_blank">{{answers?.owner?.display_name}}</a>
               <span class="reputation" matTooltip="Reputation: {{answers?.owner?.reputation}}"
@@ -55,51 +80,34 @@
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
       <div class="row answers">
         <div class="col-md-12">
           <h2>{{answers.answers?.length}} Answers</h2>
           <ngb-tabset justify="end" [activeId]="activeTab">
-            <ngb-tab id="active" title="active">
+            <ngb-tab id="active">
+              <ng-template ngbTabTitle>
+                <div (click)="sortAnswer('activity')">Active</div>
+              </ng-template>
               <ng-template ngbTabContent>
-                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua,
-                  retro synth
-                  master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
-                  retro keffiyeh
-                  dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
-                  salvia cillum
-                  iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                <app-answers [answers]="answers?.answers"></app-answers>
               </ng-template>
             </ngb-tab>
-            <ngb-tab id="oldest" title="oldest">
-              <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin
-                coffee squid.
-                <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four
-                  loko farm-to-table
-                  craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
-                  ullamco ad vinyl
-                  cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-                  helvetica VHS salvia
-                  yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
-                  sustainable jean
-                  shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown,
-                  tumblr butcher vero
-                  sint qui sapiente accusamus tattooed echo park.</p>
+            <ngb-tab id="oldest">
+              <ng-template ngbTabTitle>
+                <div (click)="sortAnswer('creation')">oldest</div>
+              </ng-template>
+              <ng-template ngbTabContent>
+                <app-answers [answers]="answers?.answers"></app-answers>
               </ng-template>
             </ngb-tab>
-            <ngb-tab id="votes" title="votes">
+            <ngb-tab id="votes">
+              <ng-template ngbTabTitle>
+                <div (click)="sortAnswer('votes')">votes</div>
+              </ng-template>
               <ng-template ngbTabContent>
-                <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam.
-                  Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget
-                  tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et
-                  molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque.
-                  Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis.
-                  Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient
-                  montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque.
-                  Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+                <app-answers [answers]="answers?.answers"></app-answers>
               </ng-template>
             </ngb-tab>
           </ngb-tabset>

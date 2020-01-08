@@ -1,15 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { GeneralService } from "../shared/services/general.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { sites } from "./sites";
 import { ConstantService } from "../shared/services/constant.service";
+import { Subscription } from "rxjs";
 @Component({
   selector: "app-views",
   templateUrl: "./views.component.html",
   styleUrls: ["./views.component.scss"]
 })
-export class ViewsComponent implements OnInit {
+export class ViewsComponent implements OnInit, OnDestroy {
   questions: any;
+  private QuestionSubscription: Subscription;
   // questions = data.items;
   sites = sites.items;
   pageSize = "15";
@@ -80,12 +82,18 @@ export class ViewsComponent implements OnInit {
     this.getQuestions();
   }
 
+  ngOnDestroy() {
+    if (this.QuestionSubscription) {
+      this.QuestionSubscription.unsubscribe();
+    }
+  }
+
   navigateToDetails(question_id) {
     this.router.navigate([`questions/${question_id}`], {
       queryParams: {
         pagesize: 20,
         order: "desc",
-        sort: "activity",
+        sort: "votes",
         site: "stackoverflow",
         filter: this.constantService.ANSWERFILTER
       }
@@ -98,19 +106,22 @@ export class ViewsComponent implements OnInit {
     if (!filter) {
       this.router.navigate(["questions"]);
     }
-    this.generalService.getQuestions(filterString).subscribe((res: any) => {
-      if (res && res.items && res.items.length) {
-        this.questions = res.items;
-        this.pageMeta = {
-          page: res.page,
-          page_size: res.page_size,
-          total: res.total,
-          quota_remaining: res.quota_remaining,
-          quota_max: res.quota_max,
-          has_more: res.has_more
-        };
-      }
-    });
+    this.QuestionSubscription = this.generalService
+      .getQuestions(filterString)
+      .subscribe((res: any) => {
+        if (res && res.items && res.items.length) {
+          this.questions = res.items;
+          this.pageMeta = {
+            page: res.page,
+            page_size: res.page_size,
+            total: res.total,
+            quota_remaining: res.quota_remaining,
+            quota_max: res.quota_max,
+            has_more: res.has_more
+          };
+        }
+      });
+
   }
 
   jumpToPage(event) {
@@ -120,7 +131,7 @@ export class ViewsComponent implements OnInit {
         page: this.page
       }
     });
-    const filterString = `order=desc&sort=hot&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.ANSWERFILTER}`;
+    const filterString = `order=desc&sort=hot&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.QUESTIONFILTER}`;
     this.getQuestions(filterString);
     this.scrollToTop();
   }
@@ -137,24 +148,24 @@ export class ViewsComponent implements OnInit {
       }
     });
     this.page = 1;
-    const filterString = `order=desc&sort=hot&page=1&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.ANSWERFILTER}`;
+    const filterString = `order=desc&sort=hot&page=1&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.QUESTIONFILTER}`;
     this.getQuestions(filterString);
     this.scrollToTop();
   }
 
-  trackByEmpCode(index: number, question: any): string {
+  trackByQuestionId(index: number, question: any): string {
     return question.question_id;
   }
 
-  getSites() {
-    this.generalService.getSites().subscribe(
-      (res: any) => {
-        debugger;
-        console.table(res);
-      },
-      (error: any) => {
-        debugger;
-      }
-    );
-  }
+  // getSites() {
+  //   this.generalService.getSites().subscribe(
+  //     (res: any) => {
+  //       debugger;
+  //       console.table(res);
+  //     },
+  //     (error: any) => {
+  //       debugger;
+  //     }
+  //   );
+  // }
 }

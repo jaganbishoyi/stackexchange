@@ -1,0 +1,66 @@
+<div class="row pb-4 pt-4" style="border-bottom: 1px solid #80808040;" *ngFor="let answer of answers">
+  <div class="col-md-1 text-center">
+    <div class="arrow-up"></div>
+    <div class="score">{{answer.score}}</div>
+    <div class="arrow-down"></div>
+    <div class="accepted-checkmark" *ngIf="answer.is_accepted"></div>
+  </div>
+  <div class="col-md-11">
+    <div class="answer-body" [innerHTML]="answer.body"></div>
+    <div class="tags">
+      <span *ngFor="let tag of answer.tags">{{tag}}</span>
+    </div>
+    <div class="row">
+      <div class="col-md-6"></div>
+      <div class="col-md-3 owner" *ngIf="answer?.last_editor">
+        <p class="asked">edited {{answer.creation_date | unixToDate | date:"MMM d  yyyy,  hh:mm"}}</p>
+        <img src="{{answer?.last_editor?.profile_image}}" alt="">
+        <a href="{{answer.last_editor?.link}}" class="user-link"
+          target="_blank">{{answer?.last_editor?.display_name}}</a>
+        <span class="reputation" matTooltip="Reputation: {{answer?.last_editor?.reputation}}"
+          matTooltipPosition="right">{{answer?.last_editor?.reputation}}</span>
+        <div class="badge">
+          <span *ngIf="answer.last_editor?.badge_counts.gold"
+            matTooltip="{{answer.last_editor?.badge_counts.gold}} gold badge" matTooltipPosition="above">
+            <div class="badge_gold"></div>
+            {{answer.last_editor?.badge_counts.gold}}
+          </span>
+          <span *ngIf="answer.last_editor?.badge_counts.silver"
+            matTooltip="{{answer.last_editor?.badge_counts.silver}} silver badge" matTooltipPosition="above">
+            <div class="badge_silver"></div>
+            {{answer.last_editor?.badge_counts.silver}}
+          </span>
+          <span *ngIf="answer.last_editor?.badge_counts.bronze"
+            matTooltip="{{answer.last_editor?.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
+            <div class="badge_bronze"></div>
+            {{answer.last_editor?.badge_counts.bronze}}
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3 owner" [ngClass]="{'offset-md-3': !answer?.last_editor}">
+        <p class="asked">answered {{answer.creation_date | unixToDate | date:"MMM d  yyyy,  hh:mm"}}</p>
+        <img src="{{answer?.owner?.profile_image}}" alt="">
+        <a href="{{answer.owner?.link}}" class="user-link" target="_blank">{{answer?.owner?.display_name}}</a>
+        <span class="reputation" matTooltip="Reputation: {{answer?.owner?.reputation}}"
+          matTooltipPosition="right">{{answer?.owner?.reputation}}</span>
+        <div class="badge">
+          <span *ngIf="answer.owner?.badge_counts.gold" matTooltip="{{answer.owner?.badge_counts.gold}} gold badge"
+            matTooltipPosition="above">
+            <div class="badge_gold"></div>
+            {{answer.owner?.badge_counts.gold}}
+          </span>
+          <span *ngIf="answer.owner?.badge_counts.silver"
+            matTooltip="{{answer.owner?.badge_counts.silver}} silver badge" matTooltipPosition="above">
+            <div class="badge_silver"></div>
+            {{answer.owner?.badge_counts.silver}}
+          </span>
+          <span *ngIf="answer.owner?.badge_counts.bronze"
+            matTooltip="{{answer.owner?.badge_counts.bronze}} bronze badge" matTooltipPosition="above">
+            <div class="badge_bronze"></div>
+            {{answer.owner?.badge_counts.bronze}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

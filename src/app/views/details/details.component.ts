@@ -1,43 +1,82 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
-import { GeneralService } from 'src/app/shared/services/general.service';
-import { Question } from 'src/app/shared/interface/interface';
-
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
+import { ActivatedRoute, Router, NavigationStart } from "@angular/router";
+import { GeneralService } from "src/app/shared/services/general.service";
+import { data } from "../data";
+import { ConstantService } from "src/app/shared/services/constant.service";
+import { Subscription } from "rxjs";
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss'],
+  selector: "app-details",
+  templateUrl: "./details.component.html",
+  styleUrls: ["./details.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class DetailsComponent implements OnInit {
-  subjectName: string;
-  subjectId: string;
-  pageNumber: number;
-  limit: number;
-  activeTab = 'votes';
+export class DetailsComponent implements OnInit, OnDestroy {
+  activeTab = "votes";
   answers: any;
-
-  subjectDetails: any;
-  Questions: Question[];
-  step = 0;
+  pageSize = "15";
+  page = 1;
+  pageMeta: any;
+  private AnswersSubscription: Subscription;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public generalService: GeneralService,
     public router: Router,
-  ) { }
+    public constantService: ConstantService
+  ) {}
 
   ngOnInit() {
-    // this.getDetails();
-
+    this.scrollToTop();
     this.answers = this.activatedRoute.snapshot.data.answers.items[0];
-    console.log(this.answers);
-
-    this.router.events.subscribe(e => {
-      if (e instanceof NavigationStart) {
-        // this.getDetails();
-      }
-    });
   }
 
+  ngOnDestroy() {
+    if (this.AnswersSubscription) {
+      this.AnswersSubscription.unsubscribe();
+    }
+  }
+
+  scrollToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  sortAnswer(sort: string) {
+    this.router.navigate(
+      [`questions/${this.activatedRoute.snapshot.paramMap.get("question_id")}`],
+      {
+        queryParams: {
+          pagesize: 20,
+          order: "desc",
+          sort: sort,
+          site: "stackoverflow",
+          filter: this.constantService.ANSWERFILTER
+        }
+      }
+    );
+    const filterString = `order=desc&sort=${sort}&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.ANSWERFILTER}`;
+    this.getAnswers(
+      this.activatedRoute.snapshot.paramMap.get("question_id"),
+      filterString
+    );
+  }
+
+  getAnswers(id, filterString?) {
+    this.AnswersSubscription = this.generalService
+      .getQuestionsById(id, filterString)
+      .subscribe((res: any) => {
+        if (res && res.items && res.items.length) {
+          this.answers = res.items[0];
+          this.pageMeta = {
+            page: res.page,
+            page_size: res.page_size,
+            total: res.total,
+            quota_remaining: res.quota_remaining,
+            quota_max: res.quota_max,
+            has_more: res.has_more
+          };
+        }
+      });
+
+  }
 }

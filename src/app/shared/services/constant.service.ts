@@ -11,10 +11,11 @@ export class ConstantService {
   QUESTIONS = "questions";
   SITES = "sites";
 
-  QUESTIONFILTER = "!b1MMEAHGb38s-n";
-  ANSWERFILTER = "!3ykawH3kKhpITWlu9";
+  QUESTIONFILTER = "!b1MMEAHEe7qxq6";
+  ANSWERFILTER = "!3ykawH3klP-3bXZ6a";
   DEFAULTSITE = "stackoverflow";
   DEFAULTFILTER = `order=desc&sort=hot&page=1&pagesize=15&site=${this.DEFAULTSITE}&filter=${this.QUESTIONFILTER}`;
+  DEFAULTFILTERANSWER = `order=desc&sort=activity&pagesize=15&site=${this.DEFAULTSITE}&filter=${this.ANSWERFILTER}`;
 
   constructor() {}
 

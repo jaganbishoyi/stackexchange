@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row mb-5">
     <div class="col-md-9 mt-3">
-      <div class="row questions-block" *ngFor="let question of questions;trackBy:questionId">
+      <div class="row questions-block" *ngFor="let question of questions;trackBy:trackByQuestionId">
         <div class="col-md-1 question-status">
           <div class="votes">
             <div class="value">{{question.score}}</div>
@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-11">
           <h5 class="question" (click)="navigateToDetails(question.question_id)">{{question.title}}</h5>
-          <div class="question-body block-ellipsis" [innerHTML]="question.body"></div>
+          <div class="question-body block-ellipsis" [innerHTML]="question.body_markdown"></div>
           <div class="row">
             <div class="col-md-8 tags">
               <span *ngFor="let tag of question.tags">{{tag}}</span>
@@ -51,8 +51,8 @@
       </div>
       <div class="row pagination" *ngIf="pageMeta && pageMeta.total">
         <div class="col-md-8">
-          <ngb-pagination [collectionSize]="pageMeta.total" [(page)]="page" (pageChange)="jumpToPage($event)"
-            [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+          <ngb-pagination [collectionSize]="pageMeta.total" [(page)]="page" [pageSize]="pageSize"
+            (pageChange)="jumpToPage($event)" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
         </div>
         <div class="col-md-4">
           <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]=pageSize
