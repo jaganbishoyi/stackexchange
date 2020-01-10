@@ -1,9 +1,4 @@
 $green: #48a868;
-.card {
-  &:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0px 1px rgba(0, 0, 0, 0.22);
-  }
-}
 
 .site {
   a,
@@ -80,5 +75,34 @@ $green: #48a868;
   cursor: pointer;
   &:hover {
     color: #0064bd;
+  }
+}
+
+.filter-block {
+  border-bottom: 1px solid #80808057;
+  margin-bottom: 20px;
+  .heading {
+    h3 {
+      font-size: 25px;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+#collapseExample {
+  .col-md-4 {
+    font-size: 15px;
+    margin-bottom: 15px;
+    input,
+    select {
+      float: right;
+      width: 65% !important;
+    }
+    .input-group{
+      width:65% !important;
+      float: right;
+    }
   }
 }

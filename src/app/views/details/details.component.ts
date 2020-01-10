@@ -1,19 +1,18 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
-import { ActivatedRoute, Router, NavigationStart } from "@angular/router";
-import { GeneralService } from "src/app/shared/services/general.service";
-import { data } from "../data";
-import { ConstantService } from "src/app/shared/services/constant.service";
-import { Subscription } from "rxjs";
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GeneralService } from 'src/app/shared/services/general.service';
+import { ConstantService } from 'src/app/shared/services/constant.service';
+import { Subscription } from 'rxjs';
 @Component({
-  selector: "app-details",
-  templateUrl: "./details.component.html",
-  styleUrls: ["./details.component.scss"],
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  activeTab = "votes";
+  activeTab = 'votes';
   answers: any;
-  pageSize = "15";
+  pageSize = '15';
   page = 1;
   pageMeta: any;
   private AnswersSubscription: Subscription;
@@ -43,20 +42,20 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   sortAnswer(sort: string) {
     this.router.navigate(
-      [`questions/${this.activatedRoute.snapshot.paramMap.get("question_id")}`],
+      [`questions/${this.activatedRoute.snapshot.paramMap.get('question_id')}`],
       {
         queryParams: {
           pagesize: 20,
-          order: "desc",
+          order: 'desc',
           sort: sort,
-          site: "stackoverflow",
+          site: 'stackoverflow',
           filter: this.constantService.ANSWERFILTER
         }
       }
     );
     const filterString = `order=desc&sort=${sort}&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.ANSWERFILTER}`;
     this.getAnswers(
-      this.activatedRoute.snapshot.paramMap.get("question_id"),
+      this.activatedRoute.snapshot.paramMap.get('question_id'),
       filterString
     );
   }
