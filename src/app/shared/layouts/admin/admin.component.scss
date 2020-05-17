@@ -9,7 +9,8 @@
 
 .main-content-wrap {
   padding-top: 53px;
-  height: calc(100vh - 53px)
+  min-height: calc(100vh - 100px);
+  margin-bottom: 40px;
 }
 
 .footer {
@@ -17,7 +18,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 0;
+  z-index: 999999;
   background: #f8f9fa;
   padding: 15px 16px;
 }
