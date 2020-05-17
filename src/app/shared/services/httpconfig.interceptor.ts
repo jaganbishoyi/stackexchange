@@ -24,24 +24,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         next: HttpHandler,
     ): Observable<HttpEvent<any>> {
 
-        const email = localStorage.getItem('email');
-
-        const branchId = localStorage.getItem('branchId');
-
-        if (branchId) {
-            request = request.clone({
-                headers: request.headers.set('X-Branch-Id', `${branchId}`),
-            });
-        }
-
-        const accountId = localStorage.getItem('account_id');
-
-        if (accountId) {
-            request = request.clone({
-                headers: request.headers.set('X-Account-Id', `${accountId}`),
-            });
-        }
-
         if (!request.headers.has('Content-Type')) {
             request = request.clone({
                 headers: request.headers.set('Content-Type', 'application/json'),

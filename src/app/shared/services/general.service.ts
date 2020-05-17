@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { ConstantService } from "./constant.service";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { ConstantService } from './constant.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class GeneralService {
   constructor(

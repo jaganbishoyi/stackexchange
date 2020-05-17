@@ -1,6 +1,6 @@
 export interface Subject {
     id: number;
-    name: String;
+  name: string;
     sub_heading: string;
     icon: string;
     description: string;

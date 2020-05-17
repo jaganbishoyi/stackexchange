@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AnswerResolver } from './shared/resolver/answer.resolver';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -13,7 +14,8 @@ import { AnswerResolver } from './shared/resolver/answer.resolver';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [AnswerResolver],
   bootstrap: [AppComponent]

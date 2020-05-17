@@ -140,5 +140,8 @@
       }
     }
   },
-  "defaultProject": "stackexchange"
+  "defaultProject": "stackexchange",
+  "cli": {
+    "analytics": false
+  }
 }
