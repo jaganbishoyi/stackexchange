@@ -4,12 +4,15 @@ import { Router } from '@angular/router';
 import { ConstantService } from '../shared/services/constant.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { LocalStoreService } from '../shared/services/local-storage.service';
 @Component({
   selector: 'app-views',
   templateUrl: './views.component.html',
   styleUrls: ['./views.component.scss']
 })
 export class ViewsComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+
   filterString: string;
   questions: any;
   myForm: FormGroup;
@@ -76,11 +79,11 @@ export class ViewsComponent implements OnInit, OnDestroy {
     public generalService: GeneralService,
     public router: Router,
     private constantService: ConstantService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public store: LocalStoreService
   ) { }
 
   ngOnInit() {
-    this.getQuestions();
     this.myForm = this.fb.group({
       page: '',
       pagesize: '',
@@ -105,6 +108,13 @@ export class ViewsComponent implements OnInit, OnDestroy {
       views: '',
       wiki: ''
     });
+
+    this.subscriptions.push(this.store.itemValue.subscribe(({ key, value }) => {
+      if (key === 'site') {
+        const filterString = `order=desc&sort=hot&page=1&pagesize=15&site=${value}&filter=${this.constantService.QUESTIONFILTER}`;
+        this.getQuestions(filterString);
+      }
+    }));
   }
 
 
@@ -122,7 +132,7 @@ export class ViewsComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.filterString += `site=stackoverflow&filter=${this.constantService.QUESTIONFILTER}`;
+    this.filterString += `site=${this.store.getItem('site')}&filter=${this.constantService.QUESTIONFILTER}`;
     this.getQuestions(this.filterString);
   }
 
@@ -142,18 +152,19 @@ export class ViewsComponent implements OnInit, OnDestroy {
         pagesize: 20,
         order: 'desc',
         sort: 'votes',
-        site: 'stackoverflow',
+        site: this.store.getItem('site'),
         filter: this.constantService.ANSWERFILTER
       }
     });
   }
 
   getQuestions(filter?) {
-    let filterString =
+    const filterString =
       filter && filter.length ? filter : this.constantService.DEFAULTFILTER;
     if (!filter) {
       this.router.navigate(['questions']);
     }
+    debugger
     this.QuestionSubscription = this.generalService
       .getQuestions(filterString)
       .subscribe((res: any) => {
@@ -179,7 +190,7 @@ export class ViewsComponent implements OnInit, OnDestroy {
         page: this.page
       }
     });
-    const filterString = `order=desc&sort=hot&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.QUESTIONFILTER}`;
+    const filterString = `order=desc&sort=hot&page=${this.page}&pagesize=${this.pageSize}&site=${this.store.getItem('site')}&filter=${this.constantService.QUESTIONFILTER}`;
     this.getQuestions(filterString);
     this.scrollToTop();
   }
@@ -196,7 +207,7 @@ export class ViewsComponent implements OnInit, OnDestroy {
       }
     });
     this.page = 1;
-    const filterString = `order=desc&sort=hot&page=1&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.QUESTIONFILTER}`;
+    const filterString = `order=desc&sort=hot&page=1&pagesize=${this.pageSize}&site=${this.store.getItem('site')}&filter=${this.constantService.QUESTIONFILTER}`;
     this.getQuestions(filterString);
     this.scrollToTop();
   }

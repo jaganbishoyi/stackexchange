@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { ConstantService } from 'src/app/shared/services/constant.service';
 import { Subscription } from 'rxjs';
+import { LocalStoreService } from 'src/app/shared/services/local-storage.service';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -21,7 +22,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     public activatedRoute: ActivatedRoute,
     public generalService: GeneralService,
     public router: Router,
-    public constantService: ConstantService
+    public constantService: ConstantService,
+    public store: LocalStoreService,
   ) {}
 
   ngOnInit() {
@@ -47,13 +49,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
         queryParams: {
           pagesize: 20,
           order: 'desc',
-          sort: sort,
-          site: 'stackoverflow',
+          sort,
+          site: this.store.getItem('site'),
           filter: this.constantService.ANSWERFILTER
         }
       }
     );
-    const filterString = `order=desc&sort=${sort}&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.DEFAULTSITE}&filter=${this.constantService.ANSWERFILTER}`;
+    const filterString = `order=desc&sort=${sort}&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.SITE}&filter=${this.constantService.ANSWERFILTER}`;
     this.getAnswers(
       this.activatedRoute.snapshot.paramMap.get('question_id'),
       filterString

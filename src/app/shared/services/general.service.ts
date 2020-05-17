@@ -9,10 +9,10 @@ export class GeneralService {
   constructor(
     public http: HttpClient,
     public constantService: ConstantService
-  ) {}
+  ) { }
   getSites() {
     return this.http.get(
-      this.constantService.getUrl(`${this.constantService.SITES}`)
+      this.constantService.getUrl(`${this.constantService.SITES}/?pagesize=1000&${this.constantService.SITE_FILTER}`)
     );
   }
 
