@@ -55,7 +55,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         }
       }
     );
-    const filterString = `order=desc&sort=${sort}&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.SITE}&filter=${this.constantService.ANSWERFILTER}`;
+    const filterString = `order=desc&sort=${sort}&page=${this.page}&pagesize=${this.pageSize}&site=${this.constantService.SITES}&filter=${this.constantService.ANSWERFILTER}`;
     this.getAnswers(
       this.activatedRoute.snapshot.paramMap.get('question_id'),
       filterString
