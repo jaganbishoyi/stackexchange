@@ -1,6 +1,3 @@
 {
-    "cSpell.words": [
-        "QUESTIONFILTER",
-        "promisify"
-    ]
+    "git.ignoreLimitWarning": true
 }
