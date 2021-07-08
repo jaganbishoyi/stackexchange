@@ -1,4 +1,4 @@
-<div class="component-page-header mb-2">
+<div class="component-page-header mb-2" *ngIf="answers">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
@@ -13,7 +13,7 @@
     </div>
   </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="answers">
   <div class="row">
     <div class="col-md-9 question-block">
       <div class="row">
@@ -31,7 +31,7 @@
           <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-3 owner" *ngIf="answers?.last_editor">
-              <p class="asked">edited {{answers.creation_date | unixToDate | date:"MMM d  yyyy,  hh:mm"}}</p>
+              <p class="asked">edited {{answers.creation_date | unixToDate | date:"MMM d yyyy, hh:mm"}}</p>
               <img src="{{answers?.last_editor?.profile_image}}" alt="">
               <a href="{{answers.last_editor?.link}}" class="user-link"
                 target="_blank">{{answers?.last_editor?.display_name}}</a>
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="col-md-3 owner active" [ngClass]="{'offset-md-3': !answers?.last_editor}">
-              <p class="asked">asked {{answers.creation_date | unixToDate | date:"MMM d  yyyy,  hh:mm"}}</p>
+              <p class="asked">asked {{answers.creation_date | unixToDate | date:"MMM d yyyy, hh:mm"}}</p>
               <img src="{{answers?.owner?.profile_image}}" alt="">
               <a href="{{answers.owner?.link}}" class="user-link" target="_blank">{{answers?.owner?.display_name}}</a>
               <span class="reputation" matTooltip="Reputation: {{answers?.owner?.reputation}}"
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      <div class="row answers">
+      <div class="row answers mb-5">
         <div class="col-md-12">
           <h2>{{answers.answers?.length}} Answers</h2>
           <ngb-tabset justify="end" [activeId]="activeTab">

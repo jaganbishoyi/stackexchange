@@ -1,29 +1,30 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AdminComponent } from './shared/layouts/admin/admin.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { AdminComponent } from "./shared/layouts/admin/admin.component";
 
 const routes: Routes = [
   {
-    path: 'questions',
-    loadChildren: () => import('./views/views.module').then(m => m.ViewsModule)
+    path: "questions",
+    loadChildren: () =>
+      import("./views/views.module").then((m) => m.ViewsModule),
   },
 ];
 
 const APP_ROUTES: Routes = [
   {
-    path: '',
-    redirectTo: 'questions',
-    pathMatch: 'full',
+    path: "",
+    redirectTo: "questions",
+    pathMatch: "full",
   },
   {
-    path: '',
+    path: "",
     component: AdminComponent,
     children: routes,
-  }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(APP_ROUTES, { useHash: true })],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(APP_ROUTES)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

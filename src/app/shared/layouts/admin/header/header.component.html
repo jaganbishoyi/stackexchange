@@ -1,5 +1,5 @@
 <nav class="docs-navbar-header">
-  <div class="docs-button mat-button mat-button-base" routerLink='/'>
+  <div class="docs-button mat-button mat-button-base" (click)="navigateHome()">
     <span class="mat-button-wrapper">
       <img src="/assets/images/header/logo.png" alt="angular" class="docs-angular-logo">
     </span>
@@ -9,7 +9,8 @@
   <div class="flex-spacer"></div>
   <div>
     <div class="mat-button-wrapper">
-      <select [(ngModel)]="selected" name="car" (ngModelChange)="change($event)" style="width: 200px;margin-right: 20px;">
+      <select [(ngModel)]="selected" name="car" (ngModelChange)="change($event)"
+        style="width: 200px;margin-right: 20px;">
         <option *ngFor="let site of sites;index as index" [value]="site.api_site_parameter">
           {{site.name}}
         </option>
